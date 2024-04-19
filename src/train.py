@@ -57,7 +57,7 @@ for epoch in range(start_epoch, args.epochs):
   print('==> %d/%d epoch, previous best: %.3f' % (epoch+1, args.epochs, best_acc))
   print('==> %d/%d epoch, previous best: %.3f' % (epoch+1, args.epochs, best_acc), file=log_file, flush=True)
   print('==> %d/%d epoch, previous best: %.3f' % (epoch+1, args.epochs, best_acc), file=detail_log_file, flush=True)
-  train_bar = tqdm(train)
+  train_bar = tqdm(train, desc=f"Training Model")
   TP, TN, FN, FP = torch.zeros(1).long(), torch.zeros(1).long(), torch.zeros(1).long(), torch.zeros(1).long()
   net.train()
   for _, prob in enumerate(train_bar):
@@ -87,7 +87,7 @@ for epoch in range(start_epoch, args.epochs):
       print(desc, file=detail_log_file, flush=True)
   print(desc, file=log_file, flush=True)
   
-  val_bar = tqdm(val)
+  val_bar = tqdm(val, desc=f"Validation Model")
   TP, TN, FN, FP = torch.zeros(1).long(), torch.zeros(1).long(), torch.zeros(1).long(), torch.zeros(1).long()
   net.eval()
   for _, prob in enumerate(val_bar):

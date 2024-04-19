@@ -8,6 +8,7 @@ import argparse
 import PyMiniSolvers.minisolvers as minisolvers
 from solver import solve_sat
 from mk_problem import mk_batch_problem
+from tqdm import tqdm
 
 def generate_k_iclause(n, k):
   vs = np.random.choice(n, size=min(n, k), replace=False)
@@ -45,8 +46,10 @@ def generate(args):
   batches = []
   n_nodes_in_batch = 0
   prev_n_vars = None
+  
+  jo_bar= tqdm(range(args.min_n, args.max_n+1), desc=f"Generating Batch")
 
-  for n_var in range(args.min_n, args.max_n+1):
+  for n_var in jo_bar:
     lower_bound = int((n_var - args.min_n) * problems_per_n)
     upper_bound = int((n_var - args.min_n + 1) * problems_per_n)
     for problems_idx in range(lower_bound, upper_bound):
